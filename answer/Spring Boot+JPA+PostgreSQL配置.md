@@ -15,9 +15,8 @@ CREATE TABLE users (
 
 INSERT INTO users (username, password, email)
 VALUES ('admin', '123456', 'admin@test.com');
-
-> 替换 `your_password` 为你的实际密码。
 ```
+> 替换 `your_password` 为你的实际密码。
 
 ## 2. Spring Boot 项目配置
 
@@ -35,7 +34,6 @@ VALUES ('admin', '123456', 'admin@test.com');
     <dependency>
         <groupId>org.postgresql</groupId>
         <artifactId>postgresql</artifactId>
-        <version>42.7.10</version>
     </dependency>
 
     <!-- Spring Boot Web -->
@@ -57,20 +55,18 @@ VALUES ('admin', '123456', 'admin@test.com');
 
 ```yaml
 spring:
+  application:
+    name: mall-user
+
   datasource:
-    url: jdbc:postgresql://localhost:5432/kube_mall
-    username: kube_user
-    password: your_password
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/kubemall
+    username: postgres
+    password: 123456
 
   jpa:
     hibernate:
-      ddl-auto: update  # 开发环境可用 update / create-drop / validate
+      ddl-auto: none
     show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-
 server:
   port: 8080
 ```

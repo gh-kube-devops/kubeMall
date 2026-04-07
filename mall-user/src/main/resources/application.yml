@@ -13,3 +13,8 @@ spring:
     show-sql: true
 server:
   port: 8080
+
+# JWT 配置
+jwt:
+  secret: "kubemall-super-secret-key-for-jwt-256bit-example!"
+  expiration-ms: 3600000

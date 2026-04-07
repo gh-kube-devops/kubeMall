@@ -1,21 +1,13 @@
 package com.kubemall.user.service;
 
-import com.kubemall.user.entity.User;
-import com.kubemall.user.repository.UserRepository;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 
-@Service
-public class UserService {
+import com.kubemall.user.entity.User;
+import org.springframework.lang.NonNull;
 
-    private final UserRepository userRepository;
-
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
+public interface UserService {
+    @NonNull
+    User createUser(@NonNull User user);
+    User findByUsername(String username);
+    List<User> getAllUsers();
 }

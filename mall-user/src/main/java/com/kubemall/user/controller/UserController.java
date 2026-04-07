@@ -1,10 +1,13 @@
 package com.kubemall.user.controller;
 
+import java.util.List;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.kubemall.user.entity.User;
 import com.kubemall.user.service.UserService;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -20,4 +23,5 @@ public class UserController {
     public List<User> getUsers() {
         return userService.getAllUsers();
     }
+
 }
