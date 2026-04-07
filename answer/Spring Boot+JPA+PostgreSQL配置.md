@@ -17,6 +17,7 @@ INSERT INTO users (username, password, email)
 VALUES ('admin', '123456', 'admin@test.com');
 
 > 替换 `your_password` 为你的实际密码。
+```
 
 ## 2. Spring Boot 项目配置
 
