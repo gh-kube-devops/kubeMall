@@ -1,20 +1,42 @@
 spring:
   application:
     name: mall-user
-
+  output:
+    ansi:
+      enabled: always
   datasource:
     url: jdbc:postgresql://localhost:5432/kubemall
     username: postgres
     password: 123456
-
   jpa:
     hibernate:
       ddl-auto: none
     show-sql: true
+    
 server:
   port: 8080
+  # 中文编码设置
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
 
 # JWT 配置
 jwt:
   secret: "kubemall-super-secret-key-for-jwt-256bit-example!"
   expiration-ms: 3600000
+
+# 日志配置
+logging:
+  charset:
+    console: UTF-8
+  level:
+    root: INFO
+    com.kubemall.user: DEBUG
+    com.kubemall.user.filter: DEBUG
+    com.kubemall.user.aspect: INFO
+    org.springframework.security: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
