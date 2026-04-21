@@ -43,14 +43,13 @@ public class JwtUtil {
         return parseToken(token).getSubject();
     }
 
-    // ✅ 修复：返回 List<String> 而不是 Set<String>
     public List<String> getRoles(String token) throws JwtException {
         Object rolesObj = parseToken(token).get("roles");
         if (rolesObj instanceof List<?>) {
             return ((List<?>) rolesObj).stream()
                     .map(Object::toString)
-                    .collect(Collectors.toList());  // 改为 toList()
+                    .collect(Collectors.toList());
         }
-        return List.of();  // 返回空 List
+        return List.of();
     }
 }
