@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: mall-product
+  output:
+    ansi:
+      enabled: always
+  datasource:
+    url: jdbc:postgresql://localhost:5432/kubemall?currentSchema=product_schema
+    username: postgres
+    password: 123456
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    spring:
+    
+server:
+  port: 8081
+  # 中文编码设置
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+# 日志配置
+logging:
+  level:
+    root: INFO
+    com.kubemall.product: DEBUG
+    com.kubemall.product.filter: DEBUG
+    com.kubemall.product.aspect: INFO
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] [%X{traceId}] [%X{username}] %-5level %logger{36} - %msg%n"
+  file:
+    path: E:/logs/kubemall/mall-product
+    name: E:/logs/kubemall/mall-product/mall-product.log
+  logback:
+    rollingpolicy:
+      max-history: 30
+

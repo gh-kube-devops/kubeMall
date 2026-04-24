@@ -5,7 +5,7 @@ spring:
     ansi:
       enabled: always
   datasource:
-    url: jdbc:postgresql://localhost:5432/kubemall
+    url: jdbc:postgresql://localhost:5432/kubemall?currentSchema=user_schema
     username: postgres
     password: 123456
   jpa:
@@ -29,14 +29,19 @@ jwt:
 
 # 日志配置
 logging:
-  charset:
-    console: UTF-8
   level:
     root: INFO
     com.kubemall.user: DEBUG
     com.kubemall.user.filter: DEBUG
     com.kubemall.user.aspect: INFO
     org.springframework.security: WARN
+    org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: ERROR
   pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+    console: "%d{HH:mm:ss.SSS} [%thread] [%X{traceId}] [%X{username}] %-5level %logger{36} - %msg%n"
+  file:
+    path: E:/logs/kubemall/mall-user
+    name: E:/logs/kubemall/mall-user/mall-user.log
+  logback:
+    rollingpolicy:
+      max-history: 30
 

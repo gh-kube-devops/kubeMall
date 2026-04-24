@@ -1,7 +1,11 @@
-package com.kubemall.user.common;
+package com.kubemall.gateway.common;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import lombok.Data;
 

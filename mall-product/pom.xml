@@ -10,9 +10,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.kubemall</groupId>
-	<artifactId>mall-user</artifactId>
+	<artifactId>mall-product</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>mall-user</name>
+	<name>mall-product</name>
 	<description />
 	<url />
 	<licenses>

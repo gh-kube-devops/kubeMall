@@ -1,4 +1,4 @@
-package com.kubemall.user.aspect;
+package com.kubemall.product.aspect;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.kubemall.user.exception.BusinessException;
+import com.kubemall.product.exception.BusinessException;
 
 @Aspect
 @Component
@@ -21,7 +21,7 @@ public class ServiceLogAspect {
     /**
      * Controller 层日志
      */
-    @Around("execution(* com.kubemall.user.controller.*.*(..))")
+    @Around("execution(* com.kubemall.product.controller.*.*(..))")
     public Object logController(ProceedingJoinPoint joinPoint) throws Throwable {
 
         long start = System.currentTimeMillis();
@@ -62,7 +62,7 @@ public class ServiceLogAspect {
     /**
      * Service 层日志（核心业务）
      */
-    @Around("execution(* com.kubemall.user.service.*.*(..))")
+    @Around("execution(* com.kubemall.product.service.*.*(..))")
     public Object logService(ProceedingJoinPoint joinPoint) throws Throwable {
 
         String className = joinPoint.getTarget().getClass().getSimpleName().replace("Impl", "");

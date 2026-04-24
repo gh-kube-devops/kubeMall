@@ -1,4 +1,4 @@
-package com.kubemall.user.filter;
+package com.kubemall.product.filter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

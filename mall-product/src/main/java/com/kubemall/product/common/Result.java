@@ -1,4 +1,4 @@
-package com.kubemall.user.common;
+package com.kubemall.product.common;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,8 +12,6 @@ public class Result<T> {
     private String message;
     private T data;
     private String traceId;
-
-    // ✅ 改成 String 类型，避免序列化问题
     private String timestamp;
 
     private Result(Integer code, String message, T data) {

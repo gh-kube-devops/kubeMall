@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/v1/auth")
 public class AuthController {
 
     private final UserService userService;
@@ -41,7 +41,7 @@ public class AuthController {
         newUser.setUsername(request.getUsername());
         newUser.setPassword(request.getPassword());
         newUser.setEmail(request.getEmail());
-        
+
         User user = userService.createUser(newUser);
         return Result.success(UserResponse.from(user));
     }
@@ -50,21 +50,21 @@ public class AuthController {
     public Result<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
         try {
             User user = userService.findByUsername(request.getUsername());
-            
+
             if (!PasswordUtil.matches(request.getPassword(), user.getPassword())) {
                 throw BusinessException.loginFailed();
             }
-            
+
             List<String> roles = user.getRoles()
                     .stream()
                     .map(role -> role.getName())
                     .collect(Collectors.toList());
-            
+
             String token = jwtUtil.generateToken(user.getUsername(), roles);
 
             LocalDateTime expiresAt = LocalDateTime.now().plusHours(1);
             String expiresAtStr = expiresAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            
+
             LoginResponse response = LoginResponse.builder()
                     .token(token)
                     .tokenType("Bearer")
@@ -74,9 +74,9 @@ public class AuthController {
                     .roles(roles)
                     .expiresAt(expiresAtStr)
                     .build();
-            
+
             return Result.success(response);
-            
+
         } catch (BusinessException e) {
             // 统一返回模糊的错误信息，不暴露用户名是否存在
             return Result.fail(401, "用户名或密码错误");

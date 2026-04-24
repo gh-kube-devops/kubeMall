@@ -30,7 +30,6 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User createUser(User user) {
-        log.info("创建用户: {}", user.getUsername());
         
         // 1. 检查用户名是否已存在
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
