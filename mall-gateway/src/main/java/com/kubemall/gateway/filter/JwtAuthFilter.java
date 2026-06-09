@@ -42,7 +42,7 @@ public class JwtAuthFilter implements GatewayFilter, Ordered {
         String path = request.getURI().getPath();
 
         // =========================
-        // traceId（由 TraceIdFilter 生成，这里只读取）
+        // traceId
         // =========================
         String traceId = request.getHeaders().getFirst(TRACE_ID);
         if (traceId == null || traceId.isBlank()) {

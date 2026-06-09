@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.kubemall.user.common.Result;
+import com.kubemall.core.model.Result;
 import com.kubemall.user.dto.request.AssignRoleRequest;
 import com.kubemall.user.dto.request.ChangePasswordRequest;
 import com.kubemall.user.dto.request.UserUpdateRequest;

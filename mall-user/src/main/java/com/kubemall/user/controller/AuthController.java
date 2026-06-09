@@ -3,8 +3,7 @@ package com.kubemall.user.controller;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-
-import com.kubemall.user.common.Result;
+import com.kubemall.core.model.Result;
 import com.kubemall.user.dto.request.LoginRequest;
 import com.kubemall.user.dto.request.RegisterRequest;
 import com.kubemall.user.dto.response.LoginResponse;
