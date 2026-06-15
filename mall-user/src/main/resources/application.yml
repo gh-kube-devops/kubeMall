@@ -14,7 +14,7 @@ spring:
     show-sql: true
     
 server:
-  port: 8080
+  port: 8081
   # 中文编码设置
   servlet:
     encoding:
@@ -31,13 +31,19 @@ jwt:
 logging:
   level:
     root: INFO
+    # 你自己的模块
     com.kubemall.user: DEBUG
     com.kubemall.user.filter: DEBUG
     com.kubemall.user.aspect: INFO
+    # common-web 模块（重要！）
+    com.kubemall.web: INFO          # 整个 web 公共模块
+    com.kubemall.web.filter: DEBUG  # 具体到 filter，更详细
+    # 第三方框架
     org.springframework.security: WARN
+    org.springframework.web: WARN
     org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: ERROR
   pattern:
-    console: "%d{HH:mm:ss.SSS} [%thread] [%X{traceId}] [%X{username}] %-5level %logger{36} - %msg%n"
+    console: "%d{HH:mm:ss.SSS} [%thread] [%X{traceId}] %-5level %logger{36} - %msg%n"
   file:
     path: E:/logs/kubemall/mall-user
     name: E:/logs/kubemall/mall-user/mall-user.log

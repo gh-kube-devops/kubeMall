@@ -1,0 +1,3 @@
+com.kubemall.web.config.WebFilterAutoConfig
+com.kubemall.web.aspect.ServiceLogAspect
+com.kubemall.web.advice.ResponseAdvice

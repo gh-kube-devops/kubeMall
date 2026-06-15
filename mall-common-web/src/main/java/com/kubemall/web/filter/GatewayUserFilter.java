@@ -13,6 +13,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Gateway 用户上下文过滤器
@@ -28,8 +29,8 @@ public class GatewayUserFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain chain)
+            HttpServletResponse response,
+            FilterChain chain)
             throws ServletException, IOException {
 
         // 1. 提取请求头
@@ -37,46 +38,54 @@ public class GatewayUserFilter extends OncePerRequestFilter {
         String username = request.getHeader(HEADER_USERNAME);
         String roles = request.getHeader(HEADER_ROLES);
 
-        // 2. 设置 MDC（日志上下文）
+        // 2. 如果没有 traceId，自动生成一个
+        if (traceId == null || traceId.isEmpty()) {
+            traceId = generateTraceId();
+        }
+
+        // 3. 如果没有 username，设置为 anonymous
+        if (username == null || username.isEmpty()) {
+            username = "anonymous";
+        }
+
+        // 4. 设置 MDC（日志上下文）
         setMdcContext(traceId, username);
 
-        // 3. 设置 Spring Security 上下文
+        // 5. 设置 Spring Security 上下文
         setSecurityContext(username, roles);
 
-        try {
-            chain.doFilter(request, response);
-        } finally {
-            // 4. 清理上下文（防止内存泄漏）
-            clearContexts();
-        }
+        // 调试输出
+        System.out.println("=== GatewayUserFilter: traceId=" + traceId + ", username=" + username);
+
+        // 继续执行过滤器链
+        chain.doFilter(request, response);
+    }
+
+    /**
+     * 生成 traceId
+     */
+    private String generateTraceId() {
+        return UUID.randomUUID().toString().replace("-", "").substring(0, 16);
     }
 
     /**
      * 设置 MDC 日志上下文
      */
     private void setMdcContext(String traceId, String username) {
-        if (traceId != null && !traceId.isEmpty()) {
-            MDC.put("traceId", traceId);
-        }
-        if (username != null && !username.isEmpty()) {
-            MDC.put("username", username);
-        }
+        MDC.put("traceId", traceId);
+        MDC.put("username", username);
     }
 
     /**
      * 设置 Spring Security 上下文
      */
     private void setSecurityContext(String username, String roles) {
-        if (username == null || username.isEmpty()) {
-            return;
-        }
-
         // 解析角色
         List<SimpleGrantedAuthority> authorities = parseRoles(roles);
 
         // 创建认证信息
-        UsernamePasswordAuthenticationToken authentication =
-                new UsernamePasswordAuthenticationToken(username, null, authorities);
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, null,
+                authorities);
 
         // 设置到 SecurityContext
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -93,7 +102,7 @@ public class GatewayUserFilter extends OncePerRequestFilter {
         return Arrays.stream(roles.split(","))
                 .map(String::trim)
                 .filter(role -> !role.isEmpty())
-                .map(SimpleGrantedAuthority::new)
+                .map(role -> new SimpleGrantedAuthority(role.startsWith("ROLE_") ? role : "ROLE_" + role))
                 .toList();
     }
 

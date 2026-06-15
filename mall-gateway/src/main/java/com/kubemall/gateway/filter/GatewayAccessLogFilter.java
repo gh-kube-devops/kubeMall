@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono;
 @Order(Integer.MIN_VALUE + 1)
 public class GatewayAccessLogFilter implements WebFilter {
 
-    private static final Logger log = LoggerFactory.getLogger(AccessLogFilter.class);
+    private static final Logger log = LoggerFactory.getLogger(GatewayAccessLogFilter.class);
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {

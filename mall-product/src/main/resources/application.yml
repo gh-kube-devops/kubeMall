@@ -12,10 +12,9 @@ spring:
     hibernate:
       ddl-auto: none
     show-sql: true
-    spring:
     
 server:
-  port: 8081
+  port: 8082
   # 中文编码设置
   servlet:
     encoding:
@@ -30,8 +29,15 @@ logging:
     com.kubemall.product: DEBUG
     com.kubemall.product.filter: DEBUG
     com.kubemall.product.aspect: INFO
+    # common-web 模块（重要！）
+    com.kubemall.web: INFO          # 整个 web 公共模块
+    com.kubemall.web.filter: DEBUG  # 具体到 filter，更详细
+    # 第三方框架
+    org.springframework.security: WARN
+    org.springframework.web: WARN
+    org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: ERROR
   pattern:
-    console: "%d{HH:mm:ss.SSS} [%thread] [%X{traceId}] [%X{username}] %-5level %logger{36} - %msg%n"
+    console: "%d{HH:mm:ss.SSS} [%thread] [%X{traceId}] %-5level %logger{36} - %msg%n"
   file:
     path: E:/logs/kubemall/mall-product
     name: E:/logs/kubemall/mall-product/mall-product.log

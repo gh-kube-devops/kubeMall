@@ -1,6 +1,6 @@
 package com.kubemall.product.controller;
 
-import com.kubemall.product.common.Result;
+import com.kubemall.core.model.Result;
 import com.kubemall.product.dto.request.ProductCreateRequest;
 import com.kubemall.product.dto.response.ProductResponse;
 import com.kubemall.product.entity.Product;
@@ -13,7 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/products")
+@RequestMapping("/products")
 @RequiredArgsConstructor
 public class ProductController {
 

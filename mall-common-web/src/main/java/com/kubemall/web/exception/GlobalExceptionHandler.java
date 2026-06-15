@@ -7,9 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authorization.AuthorizationDeniedException;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -22,31 +19,24 @@ public class GlobalExceptionHandler {
 
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    /**
-     * 只用于返回给前端
-     */
     private String getTraceId() {
         return MDC.get("traceId");
     }
 
     /**
-     * 未登录 / Token问题
+     * 创建带 traceId 的失败结果
      */
-    @ExceptionHandler(AuthenticationException.class)
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public Result<Void> handleAuthException(AuthenticationException e) {
-        log.warn("AuthError traceId={} msg={}", getTraceId(), e.getMessage());
-        return Result.fail(401, "未登录或Token已过期");
+    private <T> Result<T> failResult(Integer code, String message) {
+        Result<T> result = Result.fail(code, message);
+        result.setTraceId(getTraceId());
+        return result;
     }
 
-    /**
-     * 权限不足
-     */
-    @ExceptionHandler({ AccessDeniedException.class, AuthorizationDeniedException.class })
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public Result<Void> handleAccessDeniedException(Exception e) {
-        log.warn("AccessDenied traceId={} msg={}", getTraceId(), e.getMessage());
-        return Result.fail(403, "权限不足");
+    private <T> Result<T> failResult(Integer code, String message, T data) {
+        Result<T> result = Result.fail(code, message);
+        result.setTraceId(getTraceId());
+        result.setData(data);
+        return result;
     }
 
     /**
@@ -55,7 +45,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BusinessException.class)
     public Result<Void> handleBusinessException(BusinessException e) {
         log.info("BusinessError traceId={} code={} msg={}", getTraceId(), e.getCode(), e.getMessage());
-        return Result.fail(e.getCode(), e.getMessage());
+        return failResult(e.getCode(), e.getMessage());
     }
 
     /**
@@ -64,7 +54,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Result<List<String>> handleValidationException(MethodArgumentNotValidException ex) {
-
         List<String> errors = ex.getBindingResult()
                 .getAllErrors()
                 .stream()
@@ -72,8 +61,7 @@ public class GlobalExceptionHandler {
                 .collect(Collectors.toList());
 
         log.warn("ValidationError traceId={} errors={}", getTraceId(), errors);
-
-        return Result.fail(400, "参数校验失败");
+        return failResult(400, "参数校验失败", errors);
     }
 
     /**
@@ -83,6 +71,6 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Result<Void> handleException(Exception e) {
         log.error("SysError traceId={}", getTraceId(), e);
-        return Result.fail(500, "服务器内部错误");
+        return failResult(500, "服务器内部错误");
     }
 }

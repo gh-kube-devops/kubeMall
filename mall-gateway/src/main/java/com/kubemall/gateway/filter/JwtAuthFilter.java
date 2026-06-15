@@ -46,14 +46,24 @@ public class JwtAuthFilter implements GatewayFilter, Ordered {
         // =========================
         String traceId = request.getHeaders().getFirst(TRACE_ID);
         if (traceId == null || traceId.isBlank()) {
-            traceId = "unknown";
+            traceId = java.util.UUID.randomUUID()
+                    .toString()
+                    .replace("-", "");
         }
 
         // =========================
         // 白名单
         // =========================
-        if (WHITE_LIST.stream().anyMatch(path::startsWith)) {
-            return chain.filter(exchange);
+        if (WHITE_LIST.contains(path)) {
+
+            ServerHttpRequest mutatedRequest = request.mutate()
+                    .header(TRACE_ID, traceId)
+                    .build();
+
+            return chain.filter(
+                    exchange.mutate()
+                            .request(mutatedRequest)
+                            .build());
         }
 
         // =========================
@@ -62,7 +72,7 @@ public class JwtAuthFilter implements GatewayFilter, Ordered {
         String authHeader = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            log.warn("[{}] ✗ Auth failed path={} reason=Missing token",
+            log.warn("[{}] Auth failed path={} reason=Missing token",
                     traceId, path);
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "缺少Token");
         }
@@ -70,7 +80,7 @@ public class JwtAuthFilter implements GatewayFilter, Ordered {
         String token = authHeader.substring(7);
 
         if (!jwtUtil.validateToken(token)) {
-            log.warn("[{}] ✗ Auth failed path={} reason=Invalid or expired token",
+            log.warn("[{}] Auth failed path={} reason=Invalid or expired token",
                     traceId, path);
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Token无效或已过期");
         }
@@ -81,7 +91,7 @@ public class JwtAuthFilter implements GatewayFilter, Ordered {
         String username = jwtUtil.getUsername(token);
         List<String> roles = jwtUtil.getRoles(token);
 
-        log.info("[{}] ✓ Auth success user={} roles={}",
+        log.info("[{}] Auth success user={} roles={}",
                 traceId, username, String.join(",", roles));
 
         // =========================
@@ -93,7 +103,10 @@ public class JwtAuthFilter implements GatewayFilter, Ordered {
                 .header(ROLES, String.join(",", roles))
                 .build();
 
-        return chain.filter(exchange.mutate().request(mutatedRequest).build());
+        return chain.filter(
+                exchange.mutate()
+                        .request(mutatedRequest)
+                        .build());
     }
 
     @Override

@@ -45,13 +45,6 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
-		<!-- kube-Common-web -->
-		<dependency>
-			<groupId>com.kubemall</groupId>
-			<artifactId>mall-common-web</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-
 		<!-- Gateway -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>

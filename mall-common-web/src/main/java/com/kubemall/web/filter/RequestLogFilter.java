@@ -26,18 +26,19 @@ public class RequestLogFilter extends OncePerRequestFilter {
 
         String method = request.getMethod();
         String uri = request.getRequestURI();
-        String traceId = MDC.get("traceId");
         String username = MDC.get("username");
 
-        log.info("➡ [{}] {} {} user={}", traceId, method, uri, username);
+        // 前置日志
+        log.info("=== [FILTER] ===> {} {} user={}", method, uri, username);
 
         try {
             filterChain.doFilter(request, response);
         } finally {
             long cost = System.currentTimeMillis() - start;
+            int status = response.getStatus();
 
-            log.info("⬅ [{}] {} {} cost={}ms status={}",
-                    traceId, method, uri, cost, response.getStatus());
+            // 后置日志
+            log.info("=== [FILTER] <=== {} {} cost={}ms status={}", method, uri, cost, status);
         }
     }
 }

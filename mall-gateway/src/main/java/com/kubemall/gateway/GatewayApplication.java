@@ -18,8 +18,6 @@ public class GatewayApplication {
     @Order(-200)
     public GlobalFilter allRequestLogFilter() {
         return (exchange, chain) -> {
-            String path = exchange.getRequest().getURI().getPath();
-            String method = exchange.getRequest().getMethod().name();
             return chain.filter(exchange);
         };
     }

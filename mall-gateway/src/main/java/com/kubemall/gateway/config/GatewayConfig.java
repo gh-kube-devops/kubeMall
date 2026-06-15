@@ -1,10 +1,11 @@
 package com.kubemall.gateway.config;
 
-import com.kubemall.gateway.filter.JwtAuthFilter;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import com.kubemall.gateway.filter.JwtAuthFilter;
 
 @Configuration
 public class GatewayConfig {
@@ -18,16 +19,23 @@ public class GatewayConfig {
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
-                // 用户模块路由
-                .route("user-service", r -> r
-                        .path("/api/v1/users/**", "/auth/**")
-                        .filters(f -> f.filter(jwtAuthenticationFilter))
-                        .uri("http://localhost:8080"))
-                // 商品模块路由
+
+                // 商品服务
                 .route("product-service", r -> r
                         .path("/api/v1/products/**")
-                        .filters(f -> f.filter(jwtAuthenticationFilter))
+                        .filters(f -> f
+                                .filter(jwtAuthenticationFilter)
+                                .stripPrefix(2))
+                        .uri("http://localhost:8082"))
+
+                // 用户服务
+                .route("user-service", r -> r
+                        .path("/api/v1/**")
+                        .filters(f -> f
+                                .filter(jwtAuthenticationFilter)
+                                .stripPrefix(2))
                         .uri("http://localhost:8081"))
+
                 .build();
     }
 }
