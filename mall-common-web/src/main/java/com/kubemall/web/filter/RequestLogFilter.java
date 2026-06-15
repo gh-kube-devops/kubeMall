@@ -39,6 +39,7 @@ public class RequestLogFilter extends OncePerRequestFilter {
 
             // 后置日志
             log.info("=== [FILTER] <=== {} {} cost={}ms status={}", method, uri, cost, status);
+            MDC.clear();
         }
     }
 }

@@ -2,6 +2,7 @@ package com.kubemall.user.config;
 
 import com.kubemall.web.config.BaseSecurityConfig;
 import com.kubemall.web.filter.GatewayUserFilter;
+import com.kubemall.web.filter.RequestLogFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -14,8 +15,11 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig extends BaseSecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, GatewayUserFilter gatewayUserFilter) throws Exception {
-        return super.createFilterChain(http, gatewayUserFilter);
+    public SecurityFilterChain filterChain(
+            HttpSecurity http,
+            GatewayUserFilter gatewayUserFilter,
+            RequestLogFilter requestLogFilter) throws Exception {
+        return super.createFilterChain(http, gatewayUserFilter, requestLogFilter);
     }
 
     @Bean

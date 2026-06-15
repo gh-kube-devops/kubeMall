@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -62,6 +63,16 @@ public class GlobalExceptionHandler {
 
         log.warn("ValidationError traceId={} errors={}", getTraceId(), errors);
         return failResult(400, "参数校验失败", errors);
+    }
+
+    /**
+     * 方法级权限不足（@PreAuthorize）
+     */
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public Result<Void> handleAccessDenied(AccessDeniedException ex) {
+        log.warn("AccessDenied traceId={} msg={}", getTraceId(), ex.getMessage());
+        return failResult(403, "权限不足");
     }
 
     /**

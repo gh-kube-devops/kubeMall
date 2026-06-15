@@ -3,6 +3,7 @@ package com.kubemall.web.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kubemall.core.model.Result;
 import com.kubemall.web.filter.GatewayUserFilter;
+import com.kubemall.web.filter.RequestLogFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.MDC;
@@ -24,7 +25,8 @@ public abstract class BaseSecurityConfig {
      */
     public SecurityFilterChain createFilterChain(
             HttpSecurity http,
-            GatewayUserFilter gatewayUserFilter) throws Exception {
+            GatewayUserFilter gatewayUserFilter,
+            RequestLogFilter requestLogFilter) throws Exception {
 
         http
                 .csrf(csrf -> csrf.disable())
@@ -35,7 +37,10 @@ public abstract class BaseSecurityConfig {
                         .authenticationEntryPoint(this::handleAuthenticationEntryPoint))
                 .addFilterBefore(
                         gatewayUserFilter,
-                        UsernamePasswordAuthenticationFilter.class);
+                        UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(
+                        requestLogFilter,
+                        GatewayUserFilter.class);
 
         // 由子类实现具体的授权规则
         configureAuthorization(http);

@@ -1,19 +1,20 @@
 package com.kubemall.web.filter;
 
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+
 import org.slf4j.MDC;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * Gateway 用户上下文过滤器
@@ -53,9 +54,6 @@ public class GatewayUserFilter extends OncePerRequestFilter {
 
         // 5. 设置 Spring Security 上下文
         setSecurityContext(username, roles);
-
-        // 调试输出
-        System.out.println("=== GatewayUserFilter: traceId=" + traceId + ", username=" + username);
 
         // 继续执行过滤器链
         chain.doFilter(request, response);
