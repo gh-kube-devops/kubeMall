@@ -28,6 +28,7 @@ public class GatewayAccessLogFilter implements WebFilter {
 
         long start = System.currentTimeMillis();
 
+        log.info("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
         log.info("[{}] → {} {} start", traceId, method, path);
 
         return chain.filter(exchange)

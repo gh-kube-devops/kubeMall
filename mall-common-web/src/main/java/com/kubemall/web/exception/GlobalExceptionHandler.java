@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -41,12 +42,16 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 业务异常
+     * 业务异常 - 使用 ResponseEntity 设置正确的 HTTP 状态码
      */
     @ExceptionHandler(BusinessException.class)
-    public Result<Void> handleBusinessException(BusinessException e) {
-        log.info("BusinessError traceId={} code={} msg={}", getTraceId(), e.getCode(), e.getMessage());
-        return failResult(e.getCode(), e.getMessage());
+    public ResponseEntity<Result<Void>> handleBusinessException(BusinessException e) {
+        String traceId = getTraceId();
+        log.info("BusinessError traceId={} code={} msg={}", traceId, e.getCode(), e.getMessage());
+        
+        Result<Void> result = failResult(e.getCode(), e.getMessage());
+        // 使用 BusinessException 中的 code 作为 HTTP 状态码
+        return new ResponseEntity<>(result, HttpStatus.valueOf(e.getCode()));
     }
 
     /**

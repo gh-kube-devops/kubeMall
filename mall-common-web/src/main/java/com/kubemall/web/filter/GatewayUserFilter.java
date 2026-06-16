@@ -103,12 +103,4 @@ public class GatewayUserFilter extends OncePerRequestFilter {
                 .map(role -> new SimpleGrantedAuthority(role.startsWith("ROLE_") ? role : "ROLE_" + role))
                 .toList();
     }
-
-    /**
-     * 清理上下文
-     */
-    private void clearContexts() {
-        MDC.clear();
-        SecurityContextHolder.clearContext();
-    }
 }

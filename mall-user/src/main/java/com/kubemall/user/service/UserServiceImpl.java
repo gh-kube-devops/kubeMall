@@ -3,7 +3,7 @@ package com.kubemall.user.service;
 import com.kubemall.user.dto.request.UserUpdateRequest;
 import com.kubemall.user.entity.Role;
 import com.kubemall.user.entity.User;
-import com.kubemall.user.exception.BusinessException;
+import com.kubemall.core.exception.BusinessException;
 import com.kubemall.user.repository.RoleRepository;
 import com.kubemall.user.repository.UserRepository;
 

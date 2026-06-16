@@ -29,6 +29,7 @@ public class RequestLogFilter extends OncePerRequestFilter {
         String username = MDC.get("username");
 
         // 前置日志
+        log.info("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
         log.info("=== [FILTER] ===> {} {} user={}", method, uri, username);
 
         try {

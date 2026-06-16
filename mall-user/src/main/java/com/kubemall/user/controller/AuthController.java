@@ -9,7 +9,7 @@ import com.kubemall.user.dto.request.RegisterRequest;
 import com.kubemall.user.dto.response.LoginResponse;
 import com.kubemall.user.dto.response.UserResponse;
 import com.kubemall.user.entity.User;
-import com.kubemall.user.exception.BusinessException;
+import com.kubemall.core.exception.BusinessException;
 import com.kubemall.user.security.JwtUtil;
 import com.kubemall.user.security.PasswordUtil;
 import com.kubemall.user.service.UserService;
