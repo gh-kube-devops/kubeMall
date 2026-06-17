@@ -13,14 +13,14 @@
         <relativePath />
     </parent>
 
-    <!-- kubemall Parent -->
+    <!-- kubemall parent -->
     <groupId>com.kubemall</groupId>
     <artifactId>kubemall-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 
-    <name>kubeMall Parent</name>
+    <name>kubemall parent</name>
     <description>KubeMall Multi Module Parent Project</description>
 
     <!-- 公共属性 -->
