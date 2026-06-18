@@ -5,7 +5,7 @@ spring:
     ansi:
       enabled: always
   datasource:
-    url: jdbc:postgresql://localhost:5432/kubemall?currentSchema=product_schema
+    url: jdbc:postgresql://postgres:5432/kubemall?currentSchema=product_schema
     username: postgres
     password: 123456
   jpa:

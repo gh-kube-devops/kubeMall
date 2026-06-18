@@ -1,0 +1,85 @@
+version: "3.8"
+
+services:
+
+  # =========================
+  # PostgreSQL 数据库
+  # =========================
+  postgres:
+    image: postgres:15
+    container_name: kubemall-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: kubemall
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+    ports:
+      - "5433:5432"
+    networks:
+      - kubemall-net
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # =========================
+  # user 服务
+  # =========================
+  mall-user:
+    build:
+      context: ./mall-user
+    container_name: kubemall-user
+    ports:
+      - "8081:8081"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/kubemall
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 123456
+    networks:
+      - kubemall-net
+
+  # =========================
+  # product 服务
+  # =========================
+  mall-product:
+    build:
+      context: ./mall-product
+    container_name: kubemall-product
+    ports:
+      - "8082:8082"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/kubemall
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 123456
+    networks:
+      - kubemall-net
+
+  # =========================
+  # gateway
+  # =========================
+  mall-gateway:
+    build:
+      context: ./mall-gateway
+    container_name: kubemall-gateway
+    ports:
+      - "8088:8088"
+    depends_on:
+      - mall-user
+      - mall-product
+    networks:
+      - kubemall-net
+
+# =========================
+# 网络
+# =========================
+networks:
+  kubemall-net:
+    driver: bridge
+
+# =========================
+# 数据卷
+# =========================
+volumes:
+  postgres_data:

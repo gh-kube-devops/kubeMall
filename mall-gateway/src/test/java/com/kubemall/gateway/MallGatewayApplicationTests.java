@@ -1,10 +1,10 @@
-package com.kubemall.product;
+package com.kubemall.gateway;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MallProductApplicationTests {
+class MallGatewayApplicationTests {
 
 	@Test
 	void contextLoads() {
