@@ -128,6 +128,18 @@ docker container prune
 # 清理 target 目录
 mvn clean
 
+# 查看Docker占用空间
+docker system df
+
+# 彻底清理（重要！会删除未使用的镜像/容器）
+docker system prune -a --volumes
+
+# 或分步清理
+docker container prune   # 清理停止的容器
+docker image prune -a    # 清理未使用的镜像
+docker volume prune      # 清理未使用的卷
+docker builder prune     # 清理构建缓存
+
 # 强制更新快照并清理
 mvn clean -U
 

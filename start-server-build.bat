@@ -34,13 +34,13 @@ echo 第二步：启动微服务应用
 echo ========================================
 
 cd /d E:\kubeMall\mall-user
-start "mall-user" cmd /k "chcp 65001 > nul && mvn spring-boot:run"
+start "mall-user" cmd /k "chcp 65001 > nul && mvn spring-boot:run -Dspring-boot.run.profiles=dev"
 
 cd /d E:\kubeMall\mall-product
-start "mall-product" cmd /k "chcp 65001 > nul && mvn spring-boot:run"
+start "mall-product" cmd /k "chcp 65001 > nul && mvn spring-boot:run -Dspring-boot.run.profiles=dev"
 
 cd /d E:\kubeMall\mall-gateway
-start "mall-gateway" cmd /k "chcp 65001 > nul && mvn spring-boot:run"
+start "mall-gateway" cmd /k "chcp 65001 > nul && mvn spring-boot:run -Dspring-boot.run.profiles=dev"
 
 echo.
 echo ========================================
