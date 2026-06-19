@@ -1,0 +1,21 @@
+# IDE 配置
+.vscode/
+.idea/
+*.iml
+
+# 编译产物
+target/
+*.class
+*.jar
+*.war
+
+# 日志
+*.log
+
+# 操作系统
+.DS_Store
+Thumbs.db
+
+# 本地环境配置
+application-local.properties
+application-dev.properties
