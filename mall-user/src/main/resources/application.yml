@@ -13,9 +13,6 @@ logging:
   level:
     root: INFO
     com.kubemall.user: DEBUG
-    com.kubemall.web: INFO
-    org.springframework.security: WARN
-    org.springframework.web: WARN
     # common-web 模块（重要！）
     com.kubemall.web: INFO          # 整个 web 公共模块
     com.kubemall.web.filter: DEBUG  # 具体到 filter，更详细
@@ -23,6 +20,5 @@ logging:
     org.springframework.security: WARN
     org.springframework.web: WARN
     org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: ERROR
-
   pattern:
     console: "%d{HH:mm:ss.SSS} [%thread] [%X{traceId}] %-5level %logger{36} - %msg%n"

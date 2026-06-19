@@ -35,8 +35,6 @@ logging:
   level:
     root: INFO
     com.kubemall.product: DEBUG
-    com.kubemall.product.filter: DEBUG
-    com.kubemall.product.aspect: INFO
     # common-web 模块（重要！）
     com.kubemall.web: INFO          # 整个 web 公共模块
     com.kubemall.web.filter: DEBUG  # 具体到 filter，更详细

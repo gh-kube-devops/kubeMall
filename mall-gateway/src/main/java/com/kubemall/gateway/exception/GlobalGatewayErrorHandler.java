@@ -1,7 +1,5 @@
 package com.kubemall.gateway.exception;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kubemall.core.model.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -13,6 +11,10 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerWebExchange;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kubemall.core.model.Result;
+
 import reactor.core.publisher.Mono;
 
 @Component
@@ -62,14 +64,14 @@ public class GlobalGatewayErrorHandler implements ErrorWebExceptionHandler {
 
         // 分级日志处理
         if (code >= 400 && code < 500) {
-            log.warn("[{}] ✗ Request failed method={} path={} status={} reason={}",
+            log.warn("[{}] X Request failed method={} path={} status={} reason={}",
                     traceId,
                     request.getMethod(),
                     path,
                     code,
                     message);
         } else if (code >= 500) {
-            log.error("[{}] ✗ Server error method={} path={} status={} reason={}",
+            log.error("[{}] X Server error method={} path={} status={} reason={}",
                     traceId,
                     request.getMethod(),
                     path,
