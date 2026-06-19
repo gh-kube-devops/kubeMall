@@ -19,5 +19,4 @@ spring:
 
 logging:
   file:
-    path: ./logs/mall-product
-    name: ./logs/mall-product/mall-product.log
+    name: E:/logs/kubemall/mall-product/mall-product.log

@@ -46,10 +46,3 @@ logging:
     org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: ERROR
   pattern:
     console: "%d{HH:mm:ss.SSS} [%thread] [%X{traceId}] %-5level %logger{36} - %msg%n"
-  file:
-    path: E:/logs/kubemall/mall-product
-    name: E:/logs/kubemall/mall-product/mall-product.log
-  logback:
-    rollingpolicy:
-      max-history: 30
-

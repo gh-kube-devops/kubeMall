@@ -11,3 +11,7 @@ spring:
           uri: http://localhost:8082
           predicates:
             - Path=/api/product/**
+
+logging:
+  file:
+    name: E:/logs/kubemall/mall-gateway/mall-gateway.log

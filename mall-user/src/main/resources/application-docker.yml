@@ -17,8 +17,3 @@ spring:
     init:
       mode: always
       continue-on-error: true
-
-logging:
-  file:
-    path: /var/log/mall-user
-    name: /var/log/mall-user/mall-user.log

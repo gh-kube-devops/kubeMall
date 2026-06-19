@@ -16,8 +16,3 @@ spring:
     init:
       mode: always
       continue-on-error: true
-
-logging:
-  file:
-    path: /var/log/mall-product
-    name: /var/log/mall-product/mall-product.log
