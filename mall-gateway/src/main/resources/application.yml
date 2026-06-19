@@ -1,36 +1,20 @@
 spring:
   application:
     name: mall-gateway
-  cloud:
-    gateway:
-      discovery:
-        locator:
-          enabled: false
-    
+
 server:
   port: 8088
-  # 中文编码设置
-  servlet:
-    encoding:
-      charset: UTF-8
-      enabled: true
-      force: true
 
-# JWT配置
 jwt:
   secret: "kubemall-super-secret-key-for-jwt-256bit-example!"
   expiration-ms: 3600000
 
-# 日志配置
 logging:
   level:
     com.kubemall.gateway: DEBUG
     org.springframework.cloud.gateway: WARN
     org.springframework.web: WARN
     reactor.netty: WARN
-    org.springframework.boot.web.reactive: WARN
+
   pattern:
     console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
-  charset:
-    console: UTF-8
-

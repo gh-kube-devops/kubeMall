@@ -1,0 +1,13 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: mall-user
+          uri: http://mall-user:8081
+          predicates:
+            - Path=/api/user/**
+
+        - id: mall-product
+          uri: http://mall-product:8082
+          predicates:
+            - Path=/api/product/**

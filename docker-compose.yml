@@ -3,7 +3,7 @@ version: "3.8"
 services:
 
   # =========================
-  # PostgreSQL 数据库
+  # PostgreSQL
   # =========================
   postgres:
     image: postgres:15
@@ -21,7 +21,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   # =========================
-  # user 服务
+  # mall-user
   # =========================
   mall-user:
     build:
@@ -32,14 +32,12 @@ services:
     depends_on:
       - postgres
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/kubemall
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: 123456
+      SPRING_PROFILES_ACTIVE: docker
     networks:
       - kubemall-net
 
   # =========================
-  # product 服务
+  # mall-product
   # =========================
   mall-product:
     build:
@@ -50,9 +48,7 @@ services:
     depends_on:
       - postgres
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/kubemall
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: 123456
+      SPRING_PROFILES_ACTIVE: docker
     networks:
       - kubemall-net
 
@@ -68,18 +64,20 @@ services:
     depends_on:
       - mall-user
       - mall-product
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
     networks:
       - kubemall-net
 
 # =========================
-# 网络
+# network
 # =========================
 networks:
   kubemall-net:
     driver: bridge
 
 # =========================
-# 数据卷
+# volume
 # =========================
 volumes:
   postgres_data:

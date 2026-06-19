@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/kubemall?currentSchema=product_schema
+    username: postgres
+    password: 123456
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        default_schema: product_schema
+    show-sql: true
+
+  sql:
+    init:
+      mode: always
+      continue-on-error: true
+
+logging:
+  file:
+    path: ./logs/mall-product
+    name: ./logs/mall-product/mall-product.log

@@ -25,12 +25,10 @@
 			<artifactId>mall-common-core</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-
 		<!-- Spring Cloud Gateway -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-gateway</artifactId>
-			<version>4.3.0</version>
 		</dependency>
 
 		<!-- JWT -->
